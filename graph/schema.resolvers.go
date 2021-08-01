@@ -27,9 +27,8 @@ func (r *mutationResolver) CreateAccount(ctx context.Context, input model.NewAcc
 }
 
 func (r *mutationResolver) CreateLoan(ctx context.Context, input model.NewLoan) (*model.Loan, error) {
-
 	user := &model.User{Name: "mohaimen"}
-	
+
 	card := &model.Card{
 		ID:        fmt.Sprintf("T%d", rand.Int()),
 		Number:    "19823746591823",
