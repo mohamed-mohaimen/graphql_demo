@@ -1,0 +1,71 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type Account {
+  id: ID!
+  title: String!
+  address: String!
+  user: User!
+}
+
+type Loan {
+  id: ID!
+  name: String
+  purpose: String
+  amount: Int!
+  duration: Int!
+  monthlyPayment: Float!
+  interest: Float
+  fees: Float
+  payments: [Payment!]!
+  card: Card!
+  user: User!
+}
+
+input NewLoan {
+  amount: Int!
+  duration: Int!
+  monthlyPayment: Float!
+  interest: Float
+  fees: Float
+  userId: String!
+}
+
+type Card {
+  id: ID!
+  number: String!
+  userName: String!
+  validThru: String!
+  cvv: Int!
+}
+
+type Payment {
+  id: ID!
+  amount: Float!
+  date: String!
+  status: String!
+  userId: String!
+}
+
+type User {
+  id: ID!
+  name: String!
+}
+
+type Query {
+  accounts: [Account!]!
+  loans: [Loan!]!
+  accountById(input: String!): Account!
+}
+
+input NewAccount {
+  address: String!
+  title: String!
+  userId: String!
+}
+
+type Mutation {
+  createAccount(input: NewAccount!): Account!
+  createLoan(input: NewLoan!): Loan!
+}
