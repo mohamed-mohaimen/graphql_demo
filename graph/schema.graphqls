@@ -57,6 +57,7 @@ type Query {
   accounts: [Account!]!
   loans: [Loan!]!
   accountById(input: String!): Account!
+  loanById(loanId: String!): Loan!
 }
 
 input NewAccount {

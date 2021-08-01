@@ -89,6 +89,7 @@ type ComplexityRoot struct {
 	Query struct {
 		AccountByID func(childComplexity int, input string) int
 		Accounts    func(childComplexity int) int
+		LoanByID    func(childComplexity int, loanID string) int
 		Loans       func(childComplexity int) int
 	}
 
@@ -107,6 +108,7 @@ type QueryResolver interface {
 	Accounts(ctx context.Context) ([]*model.Account, error)
 	Loans(ctx context.Context) ([]*model.Loan, error)
 	AccountByID(ctx context.Context, input string) (*model.Account, error)
+	LoanByID(ctx context.Context, loanID string) (*model.Loan, error)
 }
 
 type executableSchema struct {
@@ -354,6 +356,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Accounts(childComplexity), true
 
+	case "Query.loanById":
+		if e.complexity.Query.LoanByID == nil {
+			break
+		}
+
+		args, err := ec.field_Query_loanById_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.LoanByID(childComplexity, args["loanId"].(string)), true
+
 	case "Query.loans":
 		if e.complexity.Query.Loans == nil {
 			break
@@ -498,6 +512,7 @@ type Query {
   accounts: [Account!]!
   loans: [Loan!]!
   accountById(input: String!): Account!
+  loanById(loanId: String!): Loan!
 }
 
 input NewAccount {
@@ -608,6 +623,21 @@ func (ec *executionContext) field_Query_accountById_args(ctx context.Context, ra
 		}
 	}
 	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_loanById_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["loanId"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("loanId"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["loanId"] = arg0
 	return args, nil
 }
 
@@ -1748,6 +1778,48 @@ func (ec *executionContext) _Query_accountById(ctx context.Context, field graphq
 	res := resTmp.(*model.Account)
 	fc.Result = res
 	return ec.marshalNAccount2ᚖgraphglᚑdemoᚋgraphᚋmodelᚐAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Query_loanById(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_loanById_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().LoanByID(rctx, args["loanId"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.Loan)
+	fc.Result = res
+	return ec.marshalNLoan2ᚖgraphglᚑdemoᚋgraphᚋmodelᚐLoan(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -3376,6 +3448,20 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_accountById(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			})
+		case "loanById":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_loanById(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}

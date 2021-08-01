@@ -86,6 +86,10 @@ func (r *queryResolver) AccountByID(ctx context.Context, input string) (*model.A
 	return r.AccountsDB[input], nil
 }
 
+func (r *queryResolver) LoanByID(ctx context.Context, loanID string) (*model.Loan, error) {
+	return r.LoansDB[loanID], nil
+}
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
