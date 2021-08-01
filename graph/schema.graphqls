@@ -68,4 +68,5 @@ input NewAccount {
 type Mutation {
   createAccount(input: NewAccount!): Account!
   createLoan(input: NewLoan!): Loan!
+  updateLoan(loanId: String!, name: String, purpose: String): Loan!
 }

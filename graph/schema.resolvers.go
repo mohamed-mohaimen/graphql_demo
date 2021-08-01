@@ -56,6 +56,13 @@ func (r *mutationResolver) CreateLoan(ctx context.Context, input model.NewLoan) 
 	return loan, nil
 }
 
+func (r *mutationResolver) UpdateLoan(ctx context.Context, loanID string, name *string, purpose *string) (*model.Loan, error) {
+	r.LoansDB[loanID].Name = name
+	r.LoansDB[loanID].Purpose = purpose
+
+	return r.LoansDB[loanID], nil
+}
+
 func (r *queryResolver) Accounts(ctx context.Context) ([]*model.Account, error) {
 	var accounts []*model.Account
 
