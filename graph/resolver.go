@@ -1,6 +1,8 @@
 package graph
 
-import "graphgl-demo/graph/model"
+import (
+	"graphgl-demo/graph/model"
+)
 
 // This file will not be regenerated automatically.
 //
@@ -66,3 +68,4 @@ func NewResolver() *Resolver{
 		Payments:   payments,
 	}
 }
+
