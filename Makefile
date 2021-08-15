@@ -13,7 +13,7 @@ generate:
 
 
 build:  $(OUTPUT)
-	CGO_ENABLED=0 GOOS=linux go build -o bin/app \
+	CGO_ENABLED=0 GOOS=linux go build -o /bin/app \
 		-ldflags "-X main.version=$(VERSION)" \
 		-gcflags "-trimpath $(GOPATH)/src"
 
