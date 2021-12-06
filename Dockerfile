@@ -21,6 +21,6 @@ WORKDIR /app
 COPY --from=builder /bin/app /bin/app
 
 # Export necessary port
-EXPOSE 9090
+EXPOSE 80
 # Command to run when starting the container
 CMD ["/bin/app"]

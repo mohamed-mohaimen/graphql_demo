@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gotest-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gotest-app
+  template:
+    metadata:
+      labels:
+        app: gotest-app
+    spec:
+      containers:
+        - name: gotest
+          image: 138715745323.dkr.ecr.ap-southeast-1.amazonaws.com/svc-images:test-go-d46bbf7e95f7fd9b4dbc79ab3ba046eaf727aa41
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - name: goport
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: goport
+            initialDelaySeconds: 15
+            timeoutSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: goport
+            initialDelaySeconds: 15
+            timeoutSeconds: 30
+      imagePullSecrets:
+        - name: regcred

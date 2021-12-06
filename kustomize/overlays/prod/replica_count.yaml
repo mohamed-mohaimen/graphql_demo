@@ -1,0 +1,7 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gotest-deployment
+  labels:
+    name: hello-kubernetesspec
+    replicas: 8
