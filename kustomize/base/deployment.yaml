@@ -14,25 +14,13 @@ spec:
     spec:
       containers:
         - name: gqltest
-          image: 138715745323.dkr.ecr.ap-southeast-1.amazonaws.com/svc-images:test-go-d46bbf7e95f7fd9b4dbc79ab3ba046eaf727aa41
-          resources:
+          image: 138715745323.dkr.ecr.ap-southeast-1.amazonaws.com/svc-images:graphql_demo-b0bee4bf8512b55c3dd1f4f82f6e1dbf26f25c59
             limits:
               memory: "128Mi"
               cpu: "500m"
           ports:
             - name: goport
               containerPort: 8080
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: goport
-            initialDelaySeconds: 15
-            timeoutSeconds: 30
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: goport
-            initialDelaySeconds: 15
-            timeoutSeconds: 30
+              imagePullPolicy: Always
       imagePullSecrets:
         - name: regcred
