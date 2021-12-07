@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gotest-deployment
+  name: gqltest-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gotest-app
+      app: gqltest-app
   template:
     metadata:
       labels:
-        app: gotest-app
+        app: gqltest-app
     spec:
       containers:
-        - name: gotest
+        - name: gqltest
           image: 138715745323.dkr.ecr.ap-southeast-1.amazonaws.com/svc-images:test-go-d46bbf7e95f7fd9b4dbc79ab3ba046eaf727aa41
           resources:
             limits:
