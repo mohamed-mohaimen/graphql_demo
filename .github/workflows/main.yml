@@ -30,8 +30,8 @@ jobs:
           AWS_REGION: ap-southeast-1
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: AKIASATA2JQVWDEHW4OV
+          aws-secret-access-key: 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
           aws-region: ${{ env.AWS_REGION }}
           
       - name: Login to Amazon ECR
