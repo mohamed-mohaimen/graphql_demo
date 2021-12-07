@@ -15,12 +15,13 @@ spec:
       containers:
         - name: gqltest
           image: 138715745323.dkr.ecr.ap-southeast-1.amazonaws.com/svc-images:graphql_demo-b0bee4bf8512b55c3dd1f4f82f6e1dbf26f25c59
+          imagePullPolicy: Always
+          resources:
             limits:
               memory: "128Mi"
               cpu: "500m"
           ports:
             - name: goport
               containerPort: 8080
-              imagePullPolicy: Always
       imagePullSecrets:
         - name: regcred
