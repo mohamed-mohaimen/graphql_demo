@@ -3,5 +3,5 @@ kind: Deployment
 metadata:
   name: gqltest-deployment
   labels:
-    name: hello-kubernetesspec
-    replicas: 6
+    name: gqltest-app
+    replicas: 3
