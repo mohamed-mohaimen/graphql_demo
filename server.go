@@ -22,13 +22,6 @@ func main() {
 	resolver := graph.NewResolver()
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: resolver}))
 
-	/*srv.SetErrorPresenter(func(ctx context.Context, e error) *gqlerror.Error {
-		err := graphql.DefaultErrorPresenter(ctx, e)
-
-		println("err", err)
-
-		return err
-	})*/
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
