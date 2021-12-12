@@ -4,4 +4,5 @@ metadata:
   name: gqltest-deployment
   labels:
     name: gqltest-app
-    replicas: 3
+spec:
+  replicas: 3
